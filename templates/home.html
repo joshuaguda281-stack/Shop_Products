@@ -1,0 +1,14 @@
+{% extends 'master.html' %}
+
+{% block title %}Home{% endblock %}
+{% block content %}
+    <div class="container">
+    {% for product in products %}
+        <h4>{{ product.name }}</h4>
+        <h4>ksh{{ product.price }}</h4>
+        <h4>ksh{{ product.cost }}</h4>
+        <p>{{ product.category }}</p>
+        <hr>
+    {% endfor %}
+{% endblock %}
+</div>
