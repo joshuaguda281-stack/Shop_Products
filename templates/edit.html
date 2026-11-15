@@ -6,7 +6,7 @@
 {% block content %}
     <div class="container">
     <h2>Edit Product</h2>
-    <form action="{% url 'edit_product' product.id %}" method="post">
+    <form action="{% url 'edit_product' product.id %}" method="post" enctype="multipart/form-data">
        {% csrf_token %}
         {% bootstrap_form form %}
         <button class="btn btn-outline-primary" type="submit">Update</button>

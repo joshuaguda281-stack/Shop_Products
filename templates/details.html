@@ -24,6 +24,12 @@
     <form action="{% url 'delete_product' product.id %}" method="post" class="d-inline">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger"><i class="bi bi-archive-fill"></i> Delete</button>
+        {% if product.picture %}
+            <div class="mt-3">
+                <img src="{{ product.picture.url }}" alt="{{ product.name }}" class="img-fluid" width="300 px"
+                     height="300 px">
+            </div>
+        {% endif %}
     </form>
 </div>
 {% endblock %}

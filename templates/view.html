@@ -8,6 +8,10 @@
             <h2><a href="{% url 'product_details' product.id %}">{{ product.name }}</a></h2>
             <p>Code: {{ product.code }} | Category: {{ product.category }}</p>
             <p>Price: Ksh {{ product.price }}</p>
+            {% if product.picture %}
+                <img src="{{ product.picture.url }}" alt="{{ product.name }}" class="img-fluid" width="100 px"
+                     height="100 px">
+            {% endif %}
         </article>
     {% empty %}
         <p>No products have been added yet.</p>
