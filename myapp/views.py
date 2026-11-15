@@ -1,7 +1,9 @@
-# Create your views here.
-from django.shortcuts import render, redirect
-from myapp.models import Product
-from .my_forms import  ProductForm
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
+
+from .models import Product
+from .my_forms import ProductForm
+
 
 def home(request):
     products = Product.objects.all()
@@ -17,26 +19,35 @@ def add_product(request):
             form.save()
             return redirect('home')
     else:
-            form = ProductForm()
+        form = ProductForm()
 
-    # Product.objects.get_or_create(
-    #     code="P001",
-    #     defaults=dict(name="Unga", cost=150.00, discount=0, for_sale=True,
-    #                   category="foods", description="Energy giving", price=170.00),
-    # )
-    # Product.objects.get_or_create(
-    #     code="P101",
-    #     defaults=dict(name="Chapati", cost=20.00, discount=0, for_sale=True,
-    #                   category="foods", description="Energy giving", price=50.00),
-    # )
-    # Product.objects.get_or_create(
-    #     code="P008",
-    #     defaults=dict(name="Laptop", cost=30_000.00, discount=0, for_sale=True,
-    #                   category="electronics", description="High performance",
-    #                   price=35_000.00),
-    #
     return render(request, 'add.html', {'form': form})
+
 
 def view_products(request):
     products = Product.objects.all()
     return render(request, 'view.html', {'products': products})
+
+
+@require_POST
+def delete_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    product.delete()
+    return redirect('home')
+
+
+def edit_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = ProductForm(instance=product)
+    return render(request, 'edit.html', {'form': form, 'product': product})
+
+
+def product_details(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    return render(request, 'details.html', {'product': product})

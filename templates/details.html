@@ -1,0 +1,29 @@
+{% extends 'master.html' %}
+{% load humanize %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ product.name }}</h2>
+    <h4>ksh{{ product.price | intcomma }}</h4>
+    <h4>ksh{{ product.cost | intcomma }}</h4>
+    <p>{{ product.category }}</p>
+    <p>{{ product.description }}</p>
+    {% if product.for_sale %}
+        <p class="text-success">For sale</p>
+    {% else %}
+        <p class="text-danger">Not for sale</p>
+    {% endif %}
+
+    <p>{{ product.discount | floatformat:2 }}% discount</p>
+    <p>Created at: {{ product.created_at | naturaltime }}</p>
+    <p>Updated at: {{ product.updated_at | naturaltime }}</p>
+    <p>Product ID: {{ product.id }}</p>
+    <a href="{% url 'edit_product' product.id %}" class="btn btn-primary"><i class="bi bi-pencil"></i> Edit</a>
+    <form action="{% url 'delete_product' product.id %}" method="post" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger"><i class="bi bi-archive-fill"></i> Delete</button>
+    </form>
+</div>
+{% endblock %}

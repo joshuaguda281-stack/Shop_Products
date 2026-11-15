@@ -2,13 +2,21 @@
 
 {% block title %}Home{% endblock %}
 {% block content %}
-    <div class="container">
+<div class="container">
     {% for product in products %}
         <h4>{{ product.name }}</h4>
         <h4>ksh{{ product.price }}</h4>
         <h4>ksh{{ product.cost }}</h4>
         <p>{{ product.category }}</p>
+        <form action="{% url 'delete_product' product.id %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger"><i class="bi bi-archive-fill"></i></button>
+        </form>
+        <a href="{% url 'edit_product' product.id %}" class="btn btn-primary"><i class="bi bi-pencil"></i></a>
+        <a href="{% url 'product_details' product.id %}" class="btn btn-info"><i class="bi bi-info-circle"></i></a>
         <hr>
+    {% empty %}
+        <p>No products have been added yet.</p>
     {% endfor %}
-{% endblock %}
 </div>
+{% endblock %}

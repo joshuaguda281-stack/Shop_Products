@@ -1,0 +1,15 @@
+{% extends 'master.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}Edit Product{% endblock %}
+
+{% block content %}
+    <div class="container">
+    <h2>Edit Product</h2>
+    <form action="{% url 'edit_product' product.id %}" method="post">
+       {% csrf_token %}
+        {% bootstrap_form form %}
+        <button class="btn btn-outline-primary" type="submit">Update</button>
+    </form>
+    </div>
+{% endblock %}

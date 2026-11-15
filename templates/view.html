@@ -1,8 +1,16 @@
 {% extends 'master.html' %}
 
 {% block content %}
-    <div class="container">
-        <h1>View Products</h1>
-        <p>This is a simple view products page for the product management application.</p>
-    </div>
+<div class="container">
+    <h1>View Products</h1>
+    {% for product in products %}
+        <article class="border rounded p-3 mb-3">
+            <h2><a href="{% url 'product_details' product.id %}">{{ product.name }}</a></h2>
+            <p>Code: {{ product.code }} | Category: {{ product.category }}</p>
+            <p>Price: Ksh {{ product.price }}</p>
+        </article>
+    {% empty %}
+        <p>No products have been added yet.</p>
+    {% endfor %}
+</div>
 {% endblock %}
