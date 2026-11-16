@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path
+from django.urls import path, include
 
 from myapp import views
 
@@ -30,6 +30,12 @@ urlpatterns = [
     path('delete-product/<int:product_id>/', views.delete_product, name='delete_product'),
     path('edit-product/<int:product_id>/', views.edit_product, name='edit_product'),
     path('details/<int:product_id>/', views.product_details, name='product_details'),
+
+    path('accounts/login', views.login, name='login'),
+    path('accounts/signup', views.signup, name='signup'),
+    path('accounts/logout', views.logout, name='logout'),
+
+    path('accounts/', include('django.contrib.auth.urls'))
 ]
 
 if settings.DEBUG:

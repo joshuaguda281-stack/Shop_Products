@@ -9,8 +9,8 @@
             <p>Code: {{ product.code }} | Category: {{ product.category }}</p>
             <p>Price: Ksh {{ product.price }}</p>
             {% if product.picture %}
-                <img src="{{ product.picture.url }}" alt="{{ product.name }}" class="img-fluid" width="100 px"
-                     height="100 px">
+                <img src="{{ product.picture.url }}" alt="{{ product.name }}" class="img-fluid" width="300 px"
+                     height="500 px">
             {% endif %}
         </article>
     {% empty %}
