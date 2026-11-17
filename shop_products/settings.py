@@ -29,8 +29,12 @@ ALLOWED_HOSTS = [
     ".vercel.app",          # covers preview deployments too
     "localhost",
     "127.0.0.1",
+    ".onrender.com",
     ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.onrender.com",
+]
 
 # Application definition
 
