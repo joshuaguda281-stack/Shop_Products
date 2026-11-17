@@ -31,11 +31,9 @@ urlpatterns = [
     path('edit-product/<int:product_id>/', views.edit_product, name='edit_product'),
     path('details/<int:product_id>/', views.product_details, name='product_details'),
 
-    path('accounts/login', views.login, name='login'),
-    path('accounts/signup', views.signup, name='signup'),
-    path('accounts/logout', views.logout, name='logout'),
+    path('accounts/signup/', views.signup, name='signup'),
 
-    path('accounts/', include('django.contrib.auth.urls'))
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 if settings.DEBUG:

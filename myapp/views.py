@@ -1,11 +1,12 @@
 from django.contrib import messages
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from .models import Product
-from .my_forms import ProductForm
+from .my_forms import ProductForm, SignUpForm
+
 
 @login_required
 def home(request):
@@ -61,28 +62,16 @@ def product_details(request, product_id):
     return render(request, 'details.html', {'product': product})
 
 
-def login(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)  # Perform login logic here
-            # Perform login logic here
-            messages.success(request, 'Login successful')
-            return redirect('home')
-        else:
-            messages.error(request, 'Invalid username or password')
-
-
-    return render(request, 'registration/login.html', {'form': form})
-
-
 def signup(request):
-    return None
-
-@login_required
-def logout(request):
     if request.method == 'POST':
-        logout(request)  # Perform logout logic here
-        messages.success(request, 'Logout successful')
-    return redirect('login')
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth_login(request, user)
+            messages.success(request, 'Account created successfully')
+            return redirect('home')
+        messages.error(request, 'Please correct the errors below.')
+    else:
+        form = SignUpForm()
+
+    return render(request, 'registration/signup.html', {'form': form})
